@@ -1,39 +1,54 @@
 (function() {
-	var gulp = require('gulp'),
+	const gulp = require('gulp'),
 		config = require('./gulp/gulp.config')(),
-		webserver = require('gulp-webserver'),
+		server = require('gulp-server-livereload');
 		$ = require('gulp-load-plugins')({lazy: true}),
-		port = process.env.PORT || config.defaultPort;
+		chalk = require('chalk');
 
 	gulp.task('default', serve);
-	gulp.task('wireJs', wireJs);
+	gulp.task('injectIndex', injectIndex);
 	 
 	function serve() {
-		console.log($)
 		gulp.src(config.client)
 		    .pipe(
-		    	$.webserver({
+		    	server({
 			        fallback: 'index.html',
-			        livereload: true
+			        livereload: true,
+			        log: 'debug'
 				})
 			);
 	};
 
-	function wireJs() {
-	    log('Wiring the JS into the html');
+	function injectIndex() {
 
-	    var wiredep = require('wiredep').stream;
-	    var options = config.getWiredepDefaultOptions();
+	    console.log(
+	    	chalk.yellow('Wiring up the bower cssjs and our app js into the html...')
+	    );
 
+	    var wiredep = require('wiredep').stream,
+	    	options = config.getWiredepDefaultOptions();
+	    console.log(options)
 	    return gulp
 	        .src(
 	        	config.index
 	        )
 	        .pipe(
-	        	wiredep(options)
+	        	wiredep({
+			      directory: 'app/bower_components',
+			      fileTypes: {
+			        scss: {
+			          replace: {
+			            scss: '@import "src/app/{{filePath}}";'
+			          }
+			        }
+			      },
+			      ignorePath: /^(\.\.\/)+/
+			  })
 	        )
 	        .pipe(
-	        	inject(config.js, '', config.jsOrder)
+	        	$.inject(
+	        		gulp.src(config.js, {read: false}), {relative: true}
+	        	)
 	        )
 	        .pipe(
 	        	gulp.dest(config.client)

@@ -8,7 +8,7 @@ module.exports = function() {
         bower = {
             json: require('../bower.json'),
             directory: '../bower_components/',
-            ignorePath: '../..'
+            ignorePath: '/^(\.\.\/)+/'
         };
 
     var config = {
@@ -105,12 +105,11 @@ module.exports = function() {
      * wiredep and bower settings
      */
     config.getWiredepDefaultOptions = function() {
-        var options = {
+        return {
             bowerJson: config.bower.json,
             directory: config.bower.directory,
             ignorePath: config.bower.ignorePath
         };
-        return options;
     };
 
     return config;

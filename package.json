@@ -6,8 +6,10 @@
   "devDependencies": {
     "coffee-script": "^1.10.0",
     "gulp": "^3.9.1",
+    "gulp-inject": "^3.0.0",
     "gulp-load-plugins": "^1.2.0",
-    "gulp-webserver": "^0.9.1",
+    "gulp-server-livereload": "^1.7.0",
+    "gulp-util": "^3.0.7",
     "wiredep": "^3.0.0"
   }
 }
