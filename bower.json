@@ -1,23 +1,22 @@
 {
-  "name": "Tinder for Charts",
-  "version": "0.0.1",
-  "description": "Load charts based off watchlist and saved chart inputs",
-  "authors": [
-    "Mike Gaughan"
-  ],
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "devDependencies": {},
-  "dependencies": {
-    "jquery": "^2.2.0",
-    "bootstrap": "^3.3.6",
-    "angular": "^1.5.0",
-    "font-awesome": "^4.5.0",
-    "angular-ui": "^0.4.0"
-  }
+    "name": "Tinder for Charts",
+    "version": "0.0.1",
+    "description": "Load charts based off watchlist and saved chart inputs",
+    "authors": [
+            "Mike Gaughan"
+        ],
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "devDependencies": {
+        "jquery": "^2.2.0",
+        "bootstrap": "^3.3.6",
+        "angular": "^1.5.0",
+        "font-awesome": "^4.5.0",
+        "angular-ui": "^0.4.0"
+    }
 }
