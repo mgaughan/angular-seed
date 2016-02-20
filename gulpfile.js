@@ -1,12 +1,13 @@
 (function() {
 	const gulp = require('gulp'),
-		config = require('./gulp/gulp.config')(),
-		server = require('gulp-server-livereload');
-		$ = require('gulp-load-plugins')({lazy: true}),
+		config = getConfig(),
+		server = require('gulp-server-livereload'),
+		// $ = require('gulp-load-plugins')({lazy: true}),
 		chalk = require('chalk');
 
 	gulp.task('default', serve);
-	gulp.task('injectIndex', injectIndex);
+	gulp.task('wiredep', wiredep);
+	gulp.task('injectJs', injectJs);
 	 
 	function serve() {
 		gulp.src(config.client)
@@ -19,31 +20,29 @@
 			);
 	};
 
-	function injectIndex() {
-
-	    console.log(
-	    	chalk.yellow('Wiring up the bower cssjs and our app js into the html...')
-	    );
-
-	    var wiredep = require('wiredep').stream,
-	    	options = config.getWiredepDefaultOptions();
-	    console.log(options)
-	    return gulp
+	function wiredep(){
+		var wiredep = require('wiredep').stream;
+		
+		return gulp
 	        .src(
 	        	config.index
 	        )
 	        .pipe(
-	        	wiredep({
-			      directory: 'app/bower_components',
-			      fileTypes: {
-			        scss: {
-			          replace: {
-			            scss: '@import "src/app/{{filePath}}";'
-			          }
-			        }
-			      },
-			      ignorePath: /^(\.\.\/)+/
-			  })
+	        	wiredep(config.bower)
+	        )
+	        .pipe(
+	        	gulp.dest(config.client)
+	        );
+	};
+
+	function injectJs() {
+	    console.log(
+	    	chalk.yellow('Injecting JavaScript into the html...')
+	    );
+
+	    return gulp
+	        .src(
+	        	config.index
 	        )
 	        .pipe(
 	        	$.inject(
@@ -54,5 +53,26 @@
 	        	gulp.dest(config.client)
 	        );
 	};
+
+	function getConfig(){
+		var client = './src/client/',
+			clientApp = client + 'app/';
+		
+		return {
+			client: client,
+	        index: client + 'index.html',
+	        // app js, with no specs
+	        js: [
+	            clientApp + '**/*.module.js',
+	            clientApp + '**/*.js',
+	            '!' + clientApp + '**/*.spec.js'
+	        ],
+			bower: {
+				json: require('./bower.json'),
+	            directory: './bower_components/',
+	            ignorePath: '/^(\.\.\/)+/'
+			}
+		};
+	}
 	
 })();
