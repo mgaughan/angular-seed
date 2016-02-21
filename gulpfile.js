@@ -1,6 +1,7 @@
 (function() {
 	const gulp = require('gulp'),
 		config = getConfig(),
+		paths = config.paths,
 		connect = require('gulp-connect'),
 		$ = require('gulp-load-plugins')({lazy: true}),
 		chalk = require('chalk');
@@ -26,28 +27,23 @@
 
 	function startServer() {
 		connect.server({
-			root: config.clientApp,
+			root: paths.root,
 			livereload: true,
 			debug: true
 		});
-
-   	 	// sets up a livereload that watches for any changes in the root
-	    $.watch(config.client + '*.html')
-	        .pipe(connect.reload())
-	        .pipe(gulp.dest(config.clientApp));
 	};
 
 	function wiredep(){
 		var wiredep = require('wiredep').stream;
 
 		return gulp.src(
-        	config.index
+        	paths.index
         )
         .pipe(
         	wiredep(config.bower)
         )
         .pipe(
-        	gulp.dest(config.client)
+        	gulp.dest(paths.root)
         );
 	};
 
@@ -67,9 +63,15 @@
 			chalk.yellow('Watching for change in index.html...')
 		);
 
+   	 	// sets up a livereload that watches for any changes in the root
+	    // $.watch(config.index)
+	    //     .pipe($.livereload());
+	    //     // .pipe(gulp.dest(config.app));
+	    console.log($.livereload)
 		return $.watch(
-			[config.index]
-		);
+			[paths.index]
+		)
+		.pipe($.livereload());
 	};
 
 	function watchSass() {
@@ -78,13 +80,13 @@
 		);
 
 		return gulp.watch(
-			config.sass, ['sass']
+			paths.sass, ['sass']
 		);
 	};
 
 	function watchScripts(){
 		return gulp.src(
-			config.js
+			paths.js
 		)
 		.pipe(
 			connect.reload()
@@ -94,69 +96,80 @@
 	// Scripts
 	function sass() {
 		return gulp.src(
-			config.sass
+			paths.sass
 		)
 		.pipe(
 			$.sass().on('error', $.sass.logError)
 		)
 		.pipe(
-			gulp.dest(config.cssRoot)
+			gulp.dest(paths.content)
 		);
 	};
 
 	function injectCss(){
 	    return gulp.src(
-        	config.index
+        	paths.index
         )
         .pipe(
         	$.inject(
-        		gulp.src(config.css)
+        		gulp.src(paths.css),
+        		paths.inject
         	)
         )
         .pipe(
-        	gulp.dest(config.client)
+        	gulp.dest(paths.root)
         );
 	};
 
 	// Scripts
 	function injectJs() {
 	    return gulp.src(
-        	config.index
+        	paths.index
         )
         .pipe(
         	$.inject(
-        		gulp.src(config.js)
+        		gulp.src(paths.js),
+        		paths.inject
         	)
         )
         .pipe(
-        	gulp.dest(config.client)
+        	gulp.dest(paths.root)
         );
 	};
 
 	// Config
 	function getConfig(){
-		var client = './src/client/',
-			clientApp = client + 'app/',
-			cssRoot = clientApp + '/css/';
+		var root = './src/'
+			app = root + 'app/',
+			content = root + 'content/',
+			bowerPath = content + 'bower_components/';
 		
 		return {
-			client: client,
-			clientApp: clientApp,
-	        index: client + 'index.html',
-	        sass: clientApp + '**/*.scss',
-	        cssRoot: cssRoot,
-	        css: cssRoot + '*.css',
-	        // app js, with no specs
-	        js: [
-	            clientApp + '**/*.module.js',
-	            clientApp + '**/*.js',
-	            '!' + clientApp + '**/*.spec.js'
-	        ],
+			paths: {
+				root: root,
+		        index: root + 'index.html',
+		        content: content,
+		        bower: bowerPath,
+				app: app,
+		        sass: app + '**/*.scss',
+		        css: content + '*.css',
+		        // app js, with no specs
+		        js: [
+		            app + '**/*.module.js',
+		            app + '**/*.js',
+		            '!' + app + '**/*.spec.js',
+		            '!' + bowerPath + '**/*.js'
+		        ]
+			},
 			bower: {
 				json: require('./bower.json'),
-	            directory: './bower_components/',
+	            directory: bowerPath,
 	            ignorePath: '/^(\.\.\/)+/'
-			}
+			},
+			inject: {
+    			ignorePath: 'src',
+            	addRootSlash: false
+    		}
 		};
 	};
 	
