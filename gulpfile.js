@@ -112,8 +112,8 @@
         )
         .pipe(
         	$.inject(
-        		gulp.src(paths.css),
-        		paths.inject
+        		gulp.src(paths.css), 
+        		config.inject
         	)
         )
         .pipe(
@@ -129,7 +129,7 @@
         .pipe(
         	$.inject(
         		gulp.src(paths.js),
-        		paths.inject
+        		config.inject
         	)
         )
         .pipe(
@@ -167,8 +167,7 @@
 	            ignorePath: '/^(\.\.\/)+/'
 			},
 			inject: {
-    			ignorePath: 'src',
-            	addRootSlash: false
+    			relative: true
     		}
 		};
 	};
