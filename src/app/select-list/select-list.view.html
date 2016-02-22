@@ -1,0 +1,9 @@
+<div>
+	<ul>
+		<li ng-repeat="item in vm.items" ng-class="{active: 'item == vm.activeItem'}">
+			<a href="javascript:void(0);" ng-click="vm.updateActiveItem(item)">
+				{{item}}
+			</a>
+		</li>
+	</ul>
+</div>

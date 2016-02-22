@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html ng-app="tc">
 <head>
     <style>
         /* This helps the ng-show/ng-hide animations start at the right place. */
@@ -18,13 +18,40 @@
     <!-- endbower -->
 
   <!-- inject:css -->
-  <link rel="stylesheet" href="content/app.css">
+  <link rel="stylesheet" href="content/tinder-charts.css">
+  <link rel="stylesheet" href="content/select-list/select-list.css">
   <!-- endinject -->
 </head>
 <body>
-    <div>
-        <div>  
-            se4fsda
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Tinder Charts</a>
+            </div>
+        </div>
+    </nav>
+    <div role='main' class='container'>
+        <div id='apps-container'>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div ng-controller="TinderChartsController as vm">
+                        <div class="row">
+                            <div class='col-md-offset-2 col-md-10'>
+                                <select-list items='vm.watchlist' active-item='vm.activeSecurity'></select-list>    
+                            </div>    
+                        </div>
+                        <div class="row">
+                            <div class='col-md-2'>
+                                <select-list items='vm.savedCharts' active-item='vm.activeSavedChart' class='vertical'></select-list>
+                            </div>
+                            <div class="col-md-10">
+                                Watchlist: {{vm.activeSecurity}}<br />
+                                Saved Chart: {{vm.activeSavedChart}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -35,7 +62,14 @@
     <!-- endbower -->
 
     <!-- inject:js -->
-    <script src="app/app.module.js"></script>
+    <script src="app/tinder-charts.module.js"></script>
+    <script src="app/saved-charts/saved-carts.module.js"></script>
+    <script src="app/select-list/select-list.module.js"></script>
+    <script src="app/watchlist/watchlist.module.js"></script>
+    <script src="app/tinder-charts.controller.js"></script>
+    <script src="app/saved-charts/saved-charts.service.js"></script>
+    <script src="app/select-list/select-list.component.js"></script>
+    <script src="app/watchlist/watchlist.service.js"></script>
     <!-- endinject -->
 
     <!-- inject:templates:js -->

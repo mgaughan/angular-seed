@@ -1,0 +1,27 @@
+$base-color: #325C74;
+
+$primary-header-color: #6CA6CD;
+
+nav.navbar-inverse {
+	background-color: $base-color;
+	border-color: darken( $base-color, 10% );
+
+	.navbar-header {
+		a {
+			color: $primary-header-color;
+		}
+	}
+}
+
+div[role='main']{
+	margin-top: 50px;
+}
+
+#apps-container {
+	padding: 10px 0;
+
+	.panel {
+		width: 80%;
+		margin: 0 auto;
+	}
+}

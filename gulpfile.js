@@ -4,19 +4,17 @@
 		paths = config.paths,
 		connect = require('gulp-connect'),
 		$ = require('gulp-load-plugins')({lazy: true}),
-		chalk = require('chalk');
+		chalk = require('chalk'),
+		runSequence = require('gulp-run-sequence');
 
 	// Tasks
 	gulp.task('default', [
-		'connect', 'update-html', 'watch'
+		'connect', 'wiredep', 'watch'
 	]);
 	gulp.task('watch', [
-		'watch-html', 'watch-sass', 'watch-scripts']
-	);
+		'watch-sass', 'watch-scripts'
+	]);
 	gulp.task('connect', startServer);
-	gulp.task('update-html', [
-		'wiredep', 'inject-css', 'inject-js']
-	);
 	gulp.task('wiredep', wiredep);
 	gulp.task('watch-html', watchHtml);
 	gulp.task('watch-sass', watchSass);
@@ -48,26 +46,12 @@
 	};
 
 	// Watch
-	function watch(){
-		// return livereload.listen();
-			// gulp.watch('assets/js/libs/**/*.js', ['squish-jquery']);
-			// gulp.watch('assets/js/*.js', ['build-js']);
-			// gulp.watch('assets/less/**/*.less', ['build-css']);
-			// return gulp.watch(
-			// 	config.index, ['watch-html']
-			// );
-	};
-
 	function watchHtml(){
 		console.log(
 			chalk.yellow('Watching for change in index.html...')
 		);
-
-   	 	// sets up a livereload that watches for any changes in the root
-	    // $.watch(config.index)
-	    //     .pipe($.livereload());
-	    //     // .pipe(gulp.dest(config.app));
 	    console.log($.livereload)
+
 		return $.watch(
 			[paths.index]
 		)
@@ -79,8 +63,16 @@
 			chalk.yellow('Watching for change in sass files...')
 		);
 
-		return gulp.watch(
-			paths.sass, ['sass']
+		return gulp.src(
+			paths.sass
+		)
+		.pipe(
+			$.watch(paths.sass, function(){
+				runSequence(
+					'sass',
+					'inject-css'
+				)
+			})
 		);
 	};
 
@@ -89,8 +81,8 @@
 			paths.js
 		)
 		.pipe(
-			connect.reload()
-		);	
+			$.watch(paths.js, injectJs)
+		);
 	};
 
 	// Scripts
@@ -152,7 +144,10 @@
 		        bower: bowerPath,
 				app: app,
 		        sass: app + '**/*.scss',
-		        css: content + '*.css',
+		        css: [
+		        	content + '**/*.css',
+		            '!' + bowerPath + '**/*.css'
+		        ],
 		        // app js, with no specs
 		        js: [
 		            app + '**/*.module.js',

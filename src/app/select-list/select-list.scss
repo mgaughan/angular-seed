@@ -1,0 +1,27 @@
+select-list {
+
+	ul {
+		list-style: none;
+
+		li {
+			display: inline-block;
+			padding: 5px;
+			margin: 0 10px;
+		}
+		li.active {
+			color: red;
+		}
+	}
+}
+
+select-list.vertical {
+	float: left;
+
+	ul {
+		padding: 0;
+
+		li {
+			display: block;
+		}
+	}
+}
