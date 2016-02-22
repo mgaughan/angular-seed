@@ -4,30 +4,31 @@
 		.module('tc')
 		.controller('TinderChartsController', TinderChartsController);
 
-		TinderChartsController.$inject = ['Watchlist', 'SavedCharts'];
+		TinderChartsController.$inject = ['Watchlist', 'SavedCharts', '$scope'];
 
-		function TinderChartsController(Watchlist, SavedCharts){
+		function TinderChartsController(Watchlist, SavedCharts, $scope){
 			var vm = this,
 				watchlist = Watchlist.getWatchlist(),
 				savedCharts = SavedCharts.getSavedCharts();
-
 			vm.watchlist = watchlist;
 			vm.savedCharts = savedCharts;
 
 			vm.activeSecurity = watchlist[0];
 			vm.activeSavedChart = savedCharts[0];
 
-			
+			$scope.$watchGroup(
+				['vm.activeSecurity', 'vm.activeSavedChart'], 
+				updateChart
+			);
 
-			function updateChart(value){
-				var isWatchlist = watchlist.indexOf(value) !== -1;
+			function updateChart(newValues){
+				if(newValues.length < 2){
+					return;
+				}
+				var security = newValues[0],
+					savedChart = newValues[1];
 
-				if(isWatchlist){
-					vm.activeSecurity = value;	
-				}
-				else{
-					vm.activeSavedChart = value;
-				}
+				console.log('Loading chart %s with %s.', savedChart, security);
 			};
 		};
 
