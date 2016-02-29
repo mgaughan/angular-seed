@@ -1,27 +1,56 @@
+@import '../tinder-charts';
+
+$horizontal-width: 200px;
+
 select-list {
 
+	div {
+		border: 1px solid $base-darkened;
+	}
+
 	ul {
-		list-style: none;
+		padding: 0;
+		list-style-type: none;
 
 		li {
-			display: inline-block;
 			padding: 5px;
 			margin: 0 10px;
 		}
 		li.active {
-			color: red;
+			a {
+				color: gray;
+			}
 		}
 	}
 }
 
-select-list.vertical {
-	float: left;
+select-list.horizontal {
+	div {
+		width: $horizontal-width; // testing purposes only
+		overflow-x: scroll;
 
-	ul {
-		padding: 0;
-
+		ul {
+			width: 400px;
+			margin: 0px;
+			padding: 0px;
+			padding-right: $horizontal-width;
+			display: flex;
+			justify-content: space-between;
+		}
 		li {
-			display: block;
+			display: inline-block;
+			background-color: white;
+			text-align: center;
+			flex: 1;
+
+			& + li {
+				border-left: 1px solid $base-darkened;
+			}
 		}
 	}
+
+}
+
+select-list.vertical {
+	float: left;
 }

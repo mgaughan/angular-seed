@@ -1,10 +1,11 @@
 $base-color: #325C74;
+$base-darkened: darken( $base-color, 10% );
 
 $primary-header-color: #6CA6CD;
 
 nav.navbar-inverse {
 	background-color: $base-color;
-	border-color: darken( $base-color, 10% );
+	border-color: $base-darkened;
 
 	.navbar-header {
 		a {

@@ -37,7 +37,7 @@
                     <div ng-controller="TinderChartsController as vm">
                         <div class="row">
                             <div class='col-md-offset-2 col-md-10'>
-                                <select-list items='vm.watchlist' active-item='vm.activeSecurity'></select-list>    
+                                <select-list items='vm.watchlist' active-item='vm.activeSecurity' class='horizontal'></select-list>    
                             </div>    
                         </div>
                         <div class="row">
@@ -63,12 +63,12 @@
 
     <!-- inject:js -->
     <script src="app/tinder-charts.module.js"></script>
-    <script src="app/saved-charts/saved-carts.module.js"></script>
     <script src="app/select-list/select-list.module.js"></script>
+    <script src="app/saved-charts/saved-carts.module.js"></script>
     <script src="app/watchlist/watchlist.module.js"></script>
     <script src="app/tinder-charts.controller.js"></script>
-    <script src="app/saved-charts/saved-charts.service.js"></script>
     <script src="app/select-list/select-list.component.js"></script>
+    <script src="app/saved-charts/saved-charts.service.js"></script>
     <script src="app/watchlist/watchlist.service.js"></script>
     <!-- endinject -->
 

@@ -1,15 +1,47 @@
+nav.navbar-inverse {
+  background-color: #325C74;
+  border-color: #234050; }
+  nav.navbar-inverse .navbar-header a {
+    color: #6CA6CD; }
+
+div[role='main'] {
+  margin-top: 50px; }
+
+#apps-container {
+  padding: 10px 0; }
+  #apps-container .panel {
+    width: 80%;
+    margin: 0 auto; }
+
+select-list div {
+  border: 1px solid #234050; }
+
 select-list ul {
-  list-style: none; }
+  padding: 0;
+  list-style-type: none; }
   select-list ul li {
-    display: inline-block;
     padding: 5px;
     margin: 0 10px; }
-  select-list ul li.active {
-    color: red; }
+  select-list ul li.active a {
+    color: gray; }
+
+select-list.horizontal div {
+  width: 200px;
+  overflow-x: scroll; }
+  select-list.horizontal div ul {
+    width: 400px;
+    margin: 0px;
+    padding: 0px;
+    padding-right: 200px;
+    display: flex;
+    justify-content: space-between; }
+  select-list.horizontal div li {
+    display: inline-block;
+    background-color: white;
+    text-align: center;
+    flex: 1; }
+    select-list.horizontal div li + li {
+      border-left: 1px solid #234050; }
 
 select-list.vertical {
   float: left; }
-  select-list.vertical ul {
-    padding: 0; }
-    select-list.vertical ul li {
-      display: block; }
