@@ -16,7 +16,16 @@
     			'AAPL',
     			'GOOG',
     			'FB',
-    			'MRKT'
+    			'MRKT',
+                'MSFT',
+                'SPY',
+                'RCMT',
+                'WAGE',
+                'F',
+                'GM',
+                'BMF',
+                'NFX',
+                'HAL'
     		];
     	};
     }

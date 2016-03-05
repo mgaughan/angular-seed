@@ -26,20 +26,17 @@ select-list ul {
     color: gray; }
 
 select-list.horizontal div {
-  width: 200px;
   overflow-x: scroll; }
   select-list.horizontal div ul {
-    width: 400px;
     margin: 0px;
     padding: 0px;
-    padding-right: 200px;
-    display: flex;
-    justify-content: space-between; }
+    display: flex; }
   select-list.horizontal div li {
     display: inline-block;
     background-color: white;
     text-align: center;
-    flex: 1; }
+    flex: 1;
+    flex-basis: 0; }
     select-list.horizontal div li + li {
       border-left: 1px solid #234050; }
 

@@ -1,7 +1,5 @@
 @import '../tinder-charts';
 
-$horizontal-width: 200px;
-
 select-list {
 
 	div {
@@ -26,22 +24,19 @@ select-list {
 
 select-list.horizontal {
 	div {
-		width: $horizontal-width; // testing purposes only
 		overflow-x: scroll;
 
 		ul {
-			width: 400px;
 			margin: 0px;
 			padding: 0px;
-			padding-right: $horizontal-width;
-			display: flex;
-			justify-content: space-between;
+    		display: flex;
 		}
 		li {
 			display: inline-block;
 			background-color: white;
 			text-align: center;
-			flex: 1;
+    		flex: 1;
+			flex-basis: 0;
 
 			& + li {
 				border-left: 1px solid $base-darkened;
